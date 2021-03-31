@@ -13,6 +13,11 @@ class PeerQ4(Peer):
         """
             Question 4: implement this method
         """
+        peer_pool_list = []
+        for k, v in self.peer_pool.items():
+            peer_pool_list.append(v)            # save peer's connection durations in a list
+        return peer_pool_list
+    
 
 class SimulationQ4(Simulation):
 
@@ -23,6 +28,11 @@ class SimulationQ4(Simulation):
         """
             Question 4: implement this method
         """
+        # to do : implement here a way to simulate 80% of the distribution
+        connection_time = [i for j in self.backend_database for i in j] # develop backend_database in a list
+        histogram_bins = compute_histogram_bins(connection_time, BINS)  # compute histogram bins with the function in histogram.py
+        return histogram_bins
+
 
 if __name__ == "__main__":
 

@@ -12,7 +12,7 @@ class PeerQ2(Peer):
         """
         peer_pool_list = []
         for k, v in self.peer_pool.items():
-            peer_pool_list.append(v) 
+            peer_pool_list.append(v)            # save peer's connection durations in a list
         return peer_pool_list
 
 class SimulationQ2(Simulation):
@@ -28,14 +28,15 @@ class SimulationQ2(Simulation):
             Don't call `plot_histogram` in this method, we just want
             to compute the histogram bins counts!
         """
-        connection_time = [i for j in self.backend_database for i in j]
-        histogram_bins = compute_histogram_bins(connection_time, BINS)
+        connection_time = [i for j in self.backend_database for i in j] # develop backend_database in a list
+        histogram_bins = compute_histogram_bins(connection_time, BINS)  # compute histogram bins with the function in histogram.py
         return histogram_bins
 
 if __name__ == "__main__":
 
     s = SimulationQ2(number_of_peers=10, max_peer_pool_size=2)
     s.run()
+    
     s.report_result()
 
     s = SimulationQ2(number_of_peers=1000, max_peer_pool_size=10)
@@ -57,4 +58,5 @@ if __name__ == "__main__":
 
     s = SimulationQ2(number_of_peers=10000, max_peer_pool_size=100)
     s.run()
+    plot_histogram(s.process_backend_data())
     s.report_result()

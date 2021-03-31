@@ -2,8 +2,7 @@ from random import randint
 import plotly.graph_objects as go
 import plotly.io as pio
 # pio.renderers.default = 'svg'
-pio.renderers.default = 'browser'
-import matplotlib.pyplot as plt
+pio.renderers.default = 'browser'   # use browser interface for the plot. This can be change.
 
 def compute_histogram_bins(data=[], bins=[]):
     """
@@ -17,12 +16,13 @@ def compute_histogram_bins(data=[], bins=[]):
         You are not allowed to use external libraries other than those already
         imported.
     """
-    ints_count = {}
+    ints_count = {}         # init dictionary of numbers
     for i in data:
-        ints_count[i] = ints_count.get(i,0) + 1
-    histogram_bins = dict.fromkeys(bins, 0)
+        ints_count[i] = ints_count.get(i,0) + 1     # count numbers in "data" list
+    # the data structure to return will be this dictionary :
+    histogram_bins = dict.fromkeys(bins, 0)         # create a dict with 0 as values and "bins" as keys
     for i in range(len(bins)-1):
-        filtered = {k : v for k,v in ints_count.items() if bins[i] < k < bins[i+1]}
+        filtered = {k : v for k,v in ints_count.items() if bins[i] < k < bins[i+1]} # group numbers in each bin
         histogram_bins[bins[i]] = sum(filtered.values())
     return histogram_bins
 
@@ -35,11 +35,11 @@ def plot_histogram(bins_count):
         You are also free to provide any graphical representation enhancements
         to your output.
     """
-    y = list(bins_count.values())
-    bins = list(bins_count.keys())
-    labels = []
+    y = list(bins_count.values())       # prepare y-axis list
+    bins = list(bins_count.keys())      # prepare list for labels
+    labels = []                         # init the label list
     for i in range(len(bins)-1):
-        labels.append(f"{bins[i]}".zfill(3) + f"-{bins[i+1]}".zfill(4))
+        labels.append(f"{bins[i]}".zfill(3) + f"-{bins[i+1]}".zfill(4))     # organize a pretty labelling
     fig = go.Figure(data=[go.Bar(
         x=labels,
         y=y,
